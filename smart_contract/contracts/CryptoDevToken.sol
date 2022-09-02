@@ -32,4 +32,22 @@ contract CryptoDevToken is ERC20, Ownable {
 
         _mint(msg.sender, amountWithDecimals);
     }
+
+    function claim() public {
+        address sender = msg.sender;
+        uint256 balance = CryptoDevsNFT.balanceOf(sender);
+        require(balance > 0, "You don't own any Crypto Dev NFT");
+
+        uint256 amount = 0;
+        for (uint256 i = 0; i < balance; i++) {
+            uint256 tokenId = CryptoDevsNFT.tokenOfOwnerByIndex(msg.sender, i);
+            if (!tokenIdsClaimed[tokenId]) {
+                amount += 1;
+                tokenIdsClaimed[tokenId] = true;
+            }
+        }
+        require(amount > 0, "You have already claimed all the tokens");
+
+        _mint(msg.sender, amount * tokensPerNFT);
+    }
 }
