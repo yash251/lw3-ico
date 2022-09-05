@@ -134,6 +134,31 @@ export default function Home() {
     }
   };
 
+  const claimCryptoDevTokens = async () => {
+    try {
+      const signer = await getProviderOrSigner(true);
+
+      const tokenContract = new Contract(
+        TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
+        signer
+      );
+
+      const tx = await tokenContract.claim();
+      setLoading(true);
+
+      await tx.wait();
+      setLoading(false);
+      window.alert('Successfully claimed Crypto Dev Tokens');
+      await getBalanceOfCryptoDevTokens();
+      await getTotalTokensMinted();
+      await getTokensToBeClaimed();
+    }
+    catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
