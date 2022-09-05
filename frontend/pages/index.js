@@ -177,6 +177,24 @@ export default function Home() {
     }
   };
 
+  const getOwner = async () => {
+    try {
+      const provider = await getProviderOrSigner();
+
+      const nftContract = new Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_CONTRACT_ABI, provider);
+
+      const _owner = await tokenContract.owner();
+
+      const signer = await signer.getAddress();
+      if (address.toLowerCase() === _owner.toLowerCase()) {
+        setIsOwner(true);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
