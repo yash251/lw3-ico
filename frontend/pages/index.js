@@ -244,6 +244,60 @@ export default function Home() {
     }
   }, [walletConnected]);
 
+  const renderButton = () => {
+    if (loading) {
+      return (
+        <div>
+          <button className={styles.button}>Loading...</button>
+        </div>
+      );
+    }
+
+    if (walletConnected && isOwner) {
+      return (
+        <div>
+          <button className={styles.button1} onClick={withdrawCoins}>
+            Withdraw Coins
+          </button>
+        </div>
+      );
+    }
+
+    if (tokensToBeClaimed > 0) {
+      return (
+        <div>
+          <div className={styles.description}>
+            {tokensToBeClaimed * 10} tokens can be claimed!
+          </div>
+          <button className={styles.button} onClick={claimCryptoDevTokens}>
+            Claim Tokens
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div style={{ display: 'flex-col' }}>
+        <div>
+          <input
+            type='number'
+            placeholder='Amount of Tokens'
+            onChange={(e) => setTokenAmount(BigNumber.from(e.target.value))}
+            className={styles.input}
+          />
+        </div>
+
+        <button
+          className={styles.button}
+          disabled={!(tokenAmount > 0)}
+          onClick={() => mintCryptoDevToken(tokenAmount)}
+        >
+          Mint Tokens
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Head>
