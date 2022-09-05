@@ -181,7 +181,7 @@ export default function Home() {
     try {
       const provider = await getProviderOrSigner();
 
-      const nftContract = new Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_CONTRACT_ABI, provider);
+      const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, TOKEN_CONTRACT_ABI, provider);
 
       const _owner = await tokenContract.owner();
 
