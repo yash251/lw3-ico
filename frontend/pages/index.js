@@ -228,6 +228,22 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    if (!walletConnected) {
+      web3ModalRef.current = new Web3Modal({
+        network: 'rinkeby',
+        providerOptions: {},
+        disableInjectedProvider: false,
+      });
+
+      connectWallet();
+      getTotalTokensMinted();
+      getBalanceOfCryptoDevTokens();
+      getTokensToBeClaimed();
+      withdrawCoins();
+    }
+  }, [walletConnected]);
+
   return (
     <div className={styles.container}>
       <Head>
