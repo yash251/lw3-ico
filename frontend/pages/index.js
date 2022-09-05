@@ -159,6 +159,24 @@ export default function Home() {
     }
   };
 
+  const getTotalTokensMinted = async () => {
+    try {
+      const provider = await getProviderOrSigner();
+
+      const tokenContract = new Contract(
+        TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
+        provider
+      );
+
+      const _tokensMinted = await tokenContract.totalSupply();
+      setTokensMinted(_tokensMinted);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
