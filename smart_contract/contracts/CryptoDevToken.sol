@@ -63,3 +63,5 @@ contract CryptoDevToken is ERC20, Ownable {
 
     fallback() external payable {}
 }
+
+// contract address - 0x3BfFc56b6Ca9D1416fBFc03C34EB47b78195aDc7
