@@ -39,7 +39,49 @@ export default function Home() {
     }
     
     return web3Provider;
-  }
+  };
+
+  const getTokensToBeClaimed = async () => {
+    try {
+      const provider = await getProviderOrSigner();
+      
+      const nftContract = new Contract(
+        NFT_CONTRACT_ADDRESS,
+        NFT_CONTRACT_ABI,
+        provider
+      );
+
+      const tokenContract = new Contract(
+        TOKEN_CONTRACT_ADDRESS,
+        TOKEN_CONTRACT_ABI,
+        provider
+      );
+
+      const signer = await getProviderOrSigner(true);
+
+      const address = await signer.getAddress();
+      const balance = await nftContract.balanceOf(address);
+      if (balance === zero) {
+        setTokensToBeClaimed(zero);
+      }
+      else {
+        var amount = 0;
+
+        for (var i = 0; i < balance; i++) {
+          const tokenId = await nftContract.tokenOfOwnerByIndex(address, i);
+          const claimed = await tokenContract.tokenIdsClaimed(tokenId);
+          if (!claimed) {
+            amount++;
+          }
+        }
+        setTokensToBeClaimed(BigNumber.from(amount));
+      }
+    }
+    catch (error) {
+      console.error(error);
+      setTokensToBeClaimed(zero);
+    }
+  };
 
   return (
     <div className={styles.container}>
