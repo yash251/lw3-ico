@@ -11,6 +11,18 @@ import {
 } from '../constants'
 
 export default function Home() {
+  const zero = BigNumber.from(0);
+
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tokensToBeClaimed, setTokensToBeClaimed] = useState(zero);
+  const [balanceOfCryptoDevTokens, setBalanceOfCryptoDevTokens] = useState(zero);
+  const [tokenAmount, setTokenAmount] = useState(zero);
+  const [tokensMinted, setTokensMinted] = useState(zero);
+  const [isOwner, setIsOwner] = useState(false);
+
+  const web3ModalRef = useRef();
+  
   return (
     <div className={styles.container}>
       <Head>
